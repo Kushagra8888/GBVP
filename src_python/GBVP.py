@@ -25,6 +25,48 @@ def get_max_weight_edge_vertex(vertex, ignore_vertex = None):
                 max_weight_edge_vertex = other
     return max_weight_edge_vertex
 
+class edge:
+    def __init__(self, v1, v2):
+        if v1 > v2:
+            self.vertices = (v2, v1)
+        else:
+            self.vertices = (v1, v2)
+
+    def weight(self, ADJ_MAT):
+        return ADJ_MAT[self.vertices[0]][self.vertices[1]]
+
+    def __str__(self):
+        return "(" + str(self.vertices[0]) + "," + str(self.vertices[1]) + ")"
+
+    def __repr__(self):
+        return "(" + str(self.vertices[0]) + "," + str(self.vertices[1]) + ")"
+
+
+class affinity_cycle:
+    def __init__(self, vertex_list, higher = True):
+        self.edges = set([])
+        if higher:
+            self.cycle_node = vertex_list[-1]
+            self.other_node = vertex_list[-2]
+            start_idx = len(vertex_list) - 1
+            idx = start_idx
+            while(idx == start_idx or vertex_list[idx] != self.cycle_node):
+                self.edges.add(edge(vertex_list[idx], vertex_list[idx - 1]))
+                idx -= 1
+        else:
+            self.cycle_node = vertex_list[0]
+            self.other_node = vertex_list[1]
+            start_idx = 0
+            idx = start_idx
+            while(idx == start_idx or vertex_list[idx] != self.cycle_node):
+                self.edges.add(edge(vertex_list[idx], vertex_list[idx + 1]))
+                idx += 1
+
+    def __str__(self):
+        return "\nAffinity Cycle: " + "\nCycle Node: " + str(self.cycle_node) + "\nOther Node: " + str(self.other_node)\
+               + "\nEdges: " + str(self.edges)
+
+
 class linear_tree:
     def __init__(self, start_vertex):
         self.edges = set()
@@ -33,6 +75,7 @@ class linear_tree:
         self.lower_end = start_vertex
         self.higher_end = max_weight_eddge_vertex
         self.primitive_cycle = False
+        self.primitive_cycle_at_higher = True
 
     def max_edge_at_lower_end(self):
         return get_max_weight_edge_vertex(self.lower_end, self.vertices[1])
@@ -49,6 +92,7 @@ class linear_tree:
             for idx in xrange(len(self.vertices) - 1, 0, -1):
                 if self.vertices[idx] == vertex:
                     self.primitive_cycle = True
+                    self.primitive_cycle_at_higher = False
 
     def extend(self):
         max_at_higher = self.max_edge_at_higher_end()
@@ -72,8 +116,8 @@ if __name__ == '__main__':
     if tree.primitive_cycle:
         print "primitive cycle found"
         print tree.vertices
-
-
+        an_affinity_cylce = affinity_cycle(tree.vertices, tree.primitive_cycle_at_higher)
+        print an_affinity_cylce
 
 
 
