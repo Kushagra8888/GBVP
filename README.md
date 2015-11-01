@@ -15,9 +15,9 @@ Implementation of the Graph Based Vertical Paritioning Algorithm
 ## Important Conditions
 
 ### Possibility of a cycle
- no former edge exists, or p(former edge) <= p(al1 the cycle edges).
+ no former edge exists, or p(former edge) <= p(all the cycle edges).
 
 ### Possibility of extension
-p(edge being constiered or cycle completing edge) > = p(any one of the cycle
+p(edge being considered or cycle completing edge) > = p(any one of the cycle
   edges).
 

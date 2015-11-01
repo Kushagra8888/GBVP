@@ -10,7 +10,7 @@ class linear_tree:
         self.lower_end = start_vertex
         self.higher_end = max_weight_edge_vertex
         self.primitive_cycle = False
-        self.primitive_cycle_at_higher = True
+        self.is_primitive_cycle_at_higher = True
 
 
     def max_edge_at_lower_end(self):
@@ -28,7 +28,7 @@ class linear_tree:
             for idx in xrange(len(self.vertices) - 1, 0, -1):
                 if self.vertices[idx] == vertex:
                     self.primitive_cycle = True
-                    self.primitive_cycle_at_higher = False
+                    self.is_primitive_cycle_at_higher = False
 
     def extend(self):
         max_at_higher = self.max_edge_at_higher_end()
