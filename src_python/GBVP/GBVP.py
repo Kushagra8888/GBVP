@@ -22,7 +22,7 @@ def get_components(adjacency_matrix):
                 pass
             remove_vertices = an_affinity_cycle.all_cycle_nodes
         else:
-            remove_vertices = set(linear_tree.vertices)
+            remove_vertices = set(tree.vertices)
         remaining_nodes.difference_update(remove_vertices)
         components.append(remove_vertices)
         gbvp_graph.cut_component(remove_vertices)
