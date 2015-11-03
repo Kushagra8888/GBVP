@@ -1,15 +1,11 @@
 __author__ = 'kushasharma'
 
 import pandas as pd
-import numpy as np
-import matplotlib as plt
-import random
-import Pycluster
-
+from GBVP import GBVP
 #DataSets
-DATA1 = "slicing_table.csv"
-DATA2 = "slicing_table2.csv"
-DATA3 = "dataset2.csv"
+DATA1 = "..\..\Data\slicing_table.csv"
+DATA2 = "..\..\Data\slicing_table2.csv"
+DATA3 = "..\..\Data\dataset2.csv"
 
 #Sample matrix as given in GBVP Navathe paper
 SAMPLE_MAT = [[ 75,  25,  25,   0,  75,   0,  50,  25,  25,   0],
@@ -23,7 +19,7 @@ SAMPLE_MAT = [[ 75,  25,  25,   0,  75,   0,  50,  25,  25,   0],
               [ 25,  75, 115,  15,  25,  15,  25,  75, 115,  15],
               [  0,   0,  15,  40,   0,  40,   0,   0,  15,  40]]
 
-USE_DATA = pd.read_csv(DATA3)
+USE_DATA = pd.read_csv(DATA2)
 
 
 def mean_square_contingency_coefficient(attr1, attr2):
@@ -71,24 +67,9 @@ def compute_gbvp_clusters(distance_matrix):
     Input:A dataftame representing a distance matrix between sets of attributes
     Output: A list of lists representing the partioned columns
     """
-    return [[distance_matrix.columns[idx] for idx in a_partition] for a_partition in gbvp.GBVP(distance_matrix.values.tolist())]
+    return [[distance_matrix.columns[idx] for idx in a_partition] for a_partition in GBVP.get_components(distance_matrix.values.tolist())]
 
 
-def compute_kmedoids_clusters(distance_matrix, num_clusters, num_iter):
-    """
-    Paritions the attributes of a data frame using k-medoids.
-    Input:A dataftame representing a distance matrix between sets of attributes,
-    the no. of clusters, and the number of iterations.
-    Output: A list of lists representing the partioned columns
-    """
-    names = distance_matrix.columns
-    partitions = {}
-    cluster = Pycluster.kmedoids(distance_matrix.values, num_clusters, num_iter)[0]
-    #print cluster
-    for idx in range(len(cluster)):
-        cluster_id = cluster[idx]
-        if cluster_id in partitions.keys():
-            partitions[cluster_id].add(names[idx])
-        else:
-            partitions[cluster_id] = set([names[idx]])
-    return partitions.values()
+cor_mat = compute_correlation_distance_matrix(USE_DATA)
+print cor_mat
+print compute_gbvp_clusters(cor_mat)
