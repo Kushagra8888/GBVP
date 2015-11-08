@@ -6,7 +6,7 @@ class linear_tree:
         self.edges = set()
         self.gbvp_graph = gbvp_graph
         max_weight_edge_vertex = self.gbvp_graph.get_max_weight_edge_vertex(start_vertex, set())
-        if max_weight_edge_vertex > 0:
+        if self.gbvp_graph.weight(start_vertex, max_weight_edge_vertex) > 0:
             self.vertices = deque([start_vertex, max_weight_edge_vertex])
             self.lower_end = start_vertex
             self.higher_end = max_weight_edge_vertex
