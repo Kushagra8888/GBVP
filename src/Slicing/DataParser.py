@@ -2,10 +2,6 @@ __author__ = 'kushasharma'
 
 import pandas as pd
 from GBVP import GBVP
-#DataSets
-DATA1 = "..\..\Data\slicing_table.csv"
-DATA2 = "..\..\Data\slicing_table2.csv"
-DATA3 = "..\..\Data\dataset2.csv"
 
 #Sample matrix as given in GBVP Navathe paper
 SAMPLE_MAT = [[ 75,  25,  25,   0,  75,   0,  50,  25,  25,   0],
@@ -19,7 +15,11 @@ SAMPLE_MAT = [[ 75,  25,  25,   0,  75,   0,  50,  25,  25,   0],
               [ 25,  75, 115,  15,  25,  15,  25,  75, 115,  15],
               [  0,   0,  15,  40,   0,  40,   0,   0,  15,  40]]
 
-USE_DATA = pd.read_csv(DATA2)
+# USE_DATA = pd.read_csv("..\..\Data\\test data.csv", sep = ";")
+# USE_DATA = pd.read_csv("..\..\Data\\slicing_table.csv")
+# USE_DATA = pd.read_csv("..\..\Data\\slicing_table2.csv")
+# USE_DATA = pd.read_csv("..\..\Data\\dataset2.csv")
+USE_DATA = pd.read_csv("..\..\Data\\adult-dataset-data.csv")
 
 
 def mean_square_contingency_coefficient(attr1, attr2):
